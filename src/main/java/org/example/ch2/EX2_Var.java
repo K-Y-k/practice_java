@@ -1,12 +1,16 @@
 package org.example.ch2;
 
+import java.util.Date;
+
 public class EX2_Var {
     public static void main(String[] args) {
         System.out.println(6+3);     // int형으로 인한 덧셈후 출력
         System.out.println("6+3");   // 문자형으로 인한 출력
 
         System.out.println("======================");
-        
+
+
+
         /**
          * 변수란? 변수 저장 방식
          */
@@ -42,6 +46,7 @@ public class EX2_Var {
         //          - 실수 - float, double
         //      논리 - boolean - true
         //                    - false
+
 
         /**
          * 상수, 리터럴
@@ -92,6 +97,87 @@ public class EX2_Var {
         int a = 'A';       // A는 65이므로 int 범위 > char 범위
         long l = 123;      // long 범위   > int 범위
         double d2 = 3.14f; // double 범위 > float 범위
+
+
+        /**
+         * 문자와 문자열
+         */
+//        char ch = 'AB'; // char은 연속된 문자인 문자열은 불가능
+        String s1 = "AB"; // String 클래스로 문자열 사용
+
+        // 문자열 결합
+        // 문자열 + 아무 타입 -> 문자열
+        // 아무타입 + 문자열  -> 문자열
+        // ex1) "" + 7     = "7"
+        // ex2) "" + 7 + 7 = "7" + 7
+        // ex3) "7" + "7"  = "77"
+        // ex4) 7 + 7 + "" =  14 + ""
+        System.out.println(""+7+7);
+        System.out.println(7+7+"");
+
+
+        /**
+         * 두 변수의 값 교환하기
+         */
+        // 변수 값을 담아둘 변수를 하나(temp) 생성하여 담아서 교환해야 한다.
+        int s = 4, z = 2;
+        int tmp;
+
+        tmp = z;
+        s = z;
+        z = tmp;
+
+        System.out.println("s="+s);
+        System.out.println("z="+z);
+
+
+        /**
+         * 기본형과 참조형
+         * 기본형 8개 : boolean(논리형), char(문자형),
+         *            byte, short, int, long (정수형),
+         *            float, double (실수형)
+         *            실제 값을 저장한다.
+         *
+         * 참조형    : 기본형을 제외한 나머지 (String, System 등 우리가 무한히 추가할 수 있는 것)
+         *            메모리 주소를 저장한다. (4 byte(32bit JVM) 또는 8 byte(64bit JVM))
+         *                                메모리 최대 40억       최대 40억 x 40억 = 1600만 TB이지만
+         */
+        Date today;         // 참조형 변수 선언
+        today = new Date(); // 객체생성 : today에 객체의 주소를 저장한다.
+                            //          만약 생성된 객체(Date)가 100번지에 저장되어있다면 today는 100이 저장
+
+        /**
+         * 기본형 종류와 크기와 범위
+         */
+        //     크기(byte)      1         2       4       8
+        //  종류
+        // 논리형            boolean
+        // 문자형                       char
+        // 정수형              byte     short    int    long
+        // 실수형                       float   double
+
+        /**
+         * 기본형 표현 범위
+         * 1bit = 2진수 1자리
+         * 1byte = 8bit
+         *
+         * n비트로 표현할 수 있는 값의 개수           : 2^n개
+         * n비트로 표현할 수 있는 부호없는 정수의 범위  : 0 ~ 2^n - 1             ex) 8비트 1byte라면 정수는 -127 ~ 127
+         *                                        (양수는 1 ~ 2^n)                            양수는   0  ~ 256
+         * n비트로 표현할 수 있는 부호있는 정수의 범위  : -2^(n-1) ~ 2^(n-1) - 1
+         *
+         * ex2) 같은 2 byte short와 char이지만 char은 양수만 나타내므로 다른 범위
+         * short: -2^15 ~ 2^15 - 1 -> -32768 ~ 32767
+         * char :   0   ~ 2^16     ->    0   ~ 65535
+         *
+         * int  : -2^31 ~ 2^31 - 1 -> 20억 ~ 20억
+         * long : -2^63 ~ 2^63 - 1 -> -800경 ~ 800경
+         * BigInteger : long의 범위를 벗어날 경우 사용
+         */
+        
+
+
+
 
     }
 }
