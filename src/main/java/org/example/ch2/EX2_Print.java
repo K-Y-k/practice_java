@@ -44,18 +44,18 @@ public class EX2_Print {
         // %c          문자 형식
         // %s          문자열 형식
         
-        // %n          printf는 자동개행을 하지 않아 /n 또는 %n 사용 (%n 사용 권장)
+        // %n          printf는 자동개행을 하지 않아 /n 또는 %n 사용 (자바는 OS마다 독립적이지만 OS마다 \줄바꿈이 다르기에 %n 사용 권장)
 
         System.out.printf("%d%n", 15);
-        System.out.printf("#%o%n", 15);  // 접두사도 같이 출력하려면 #를 붙여줘야함
+        System.out.printf("#%o%n", 15);    // 접두사도 같이 출력하려면 #를 붙여줘야함
         System.out.printf("#%x%n", 15);
         System.out.printf("%s", Integer.toBinaryString(15)); // 이진수 출력
 
-        float f = 123.456789f;        // float는 정밀도가 7자리까지만 정확하다. 즉 여기서는 89가 정확히 안나올 수 있음
+        float f = 123.456789f;             // float는 정밀도가 7자리까지만 정확하다. 즉 여기서는 89가 정확히 안나올 수 있음
         System.out.printf("%f%n", f);
-        System.out.printf("%e%n", f); // %e는 지수형태로 출력됨 >> 1.234568e+02
+        System.out.printf("%e%n", f);      // %e는 지수형태로 출력됨 >> 1.234568e+02
 
-        double d = 123.456789;        // double은 정밀도가 15자리까지라 정확히 나온다.
+        double d = 123.456789;             // double은 정밀도가 15자리까지라 정확히 나온다.
         System.out.printf("%f%n", d);
         
         
