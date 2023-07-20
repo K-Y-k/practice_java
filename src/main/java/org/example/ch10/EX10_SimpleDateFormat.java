@@ -1,9 +1,7 @@
 package org.example.ch10;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 
 /**
  * SimpleDateFormat
@@ -47,7 +45,7 @@ import java.util.SimpleTimeZone;
  *   Z              Time zone(General time zone)      +0900
  *   '              escape문자(특수문자를 표현하는데 사용)  없음
  */
-public class EX9_SimpleDateFormat {
+public class EX10_SimpleDateFormat {
     public static void main(String[] args) {
         Date today = new Date(); // 객체 생성할 때 현재의 시간과 날짜를 저장
 

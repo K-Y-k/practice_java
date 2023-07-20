@@ -140,7 +140,7 @@ import java.util.Calendar;
  * date.roll(Calendar.DATE, -8); // 월(MONTH)에서 8을 빼면 2019 12 31인데 다른 필드에는 영향을 안주므로 2020 12 31이다.
  */
 
-public class EX9_Date_Calendar {
+public class EX10_Date_Calendar {
     public static void main(String[] args) {
         /**
          * 예제 1 - get()으로 가져오기

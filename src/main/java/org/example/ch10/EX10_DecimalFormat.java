@@ -42,7 +42,7 @@ import java.text.DecimalFormat;
  *                                     #.#########E0        1.23456789E6
  *                                     ##.########E0        1.23456789E6
  */
-public class EX9_DecimalFormat {
+public class EX10_DecimalFormat {
     public static void main(String[] args) throws Exception{
         DecimalFormat df1 = new DecimalFormat("#,###.##"); // 형식1
         DecimalFormat df2 = new DecimalFormat("#.###E0");  // 형식2

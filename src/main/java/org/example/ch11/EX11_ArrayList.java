@@ -1,7 +1,6 @@
 package org.example.ch11;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -67,7 +66,7 @@ import java.util.Collections;
  *        list.remove(i)
  */
 
-public class EX9_ArrayList {
+public class EX11_ArrayList {
     public static void main(String[] args) {
         // 기본 길이가 10인 ArrayList를 생성
         ArrayList list1 = new ArrayList(10);

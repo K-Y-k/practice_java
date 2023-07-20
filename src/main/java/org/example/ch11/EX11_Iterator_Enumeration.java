@@ -57,7 +57,7 @@ import java.util.Iterator;
  *                                             Iterator it = eSet.iterator();
  */
 
-public class EX9_Iterator_Enumeration {
+public class EX11_Iterator_Enumeration {
     public static void main(String[] args) {
         // 유연한 코드가 되는법
         // ArrayList list = new ArrayList();가 아니고

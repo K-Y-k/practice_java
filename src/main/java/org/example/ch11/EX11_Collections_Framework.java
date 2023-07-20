@@ -122,7 +122,7 @@ package org.example.ch11;
  * Collection values()                     Map에 저장된 모든 value 객체를 반환
  */
 
-public class EX9_Collections_Framework {
+public class EX11_Collections_Framework {
     public static void main(String[] args) {
         
     }

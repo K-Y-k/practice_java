@@ -81,7 +81,7 @@ import java.util.*;
  * Object peek() (주로 사용)      삭제없이 요소를 읽어온다. 비어있으면 null 반환
  */
 
-public class EX9_Stack_Queue {
+public class EX11_Stack_Queue {
     static Queue q2 = new LinkedList();
     static final int MAX_SIZE = 5; // 기록 최대 크기 지정
 

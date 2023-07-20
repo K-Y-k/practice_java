@@ -87,7 +87,7 @@ package org.example.ch11;
  *
  */
 
-public class EX9_LinkedList {
+public class EX11_LinkedList {
     public static void main(String[] args) {
 
     }
