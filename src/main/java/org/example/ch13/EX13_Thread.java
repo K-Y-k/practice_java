@@ -199,9 +199,11 @@ import javax.swing.*;
  *
  *  TERMINATED          쓰레드의 작업이 종료된 상태
  *
- *           start()        줄서기                     stop()
+ *                        |  ㅇ  ㅇ  ㅇ   |
+ *                          일시정지(WAITING,BLOCKED)
+ *           start()                                 stop()
  *      ㅇ     ->      ㅇ   ㅇ   ㅇ   ㅇ      ->   ㅇ    ->      ㅇ
- *   생성(NEW)         실행대기(RUNNABLE)         실행           소멸(TERMINATED)
+ *   생성(NEW)       줄서기  실행대기(RUNNABLE)     실행           소멸(TERMINATED)
  */
 
 class Thread1 extends Thread {              // 1) Thread클래스를 상속해서 쓰레드를 구현한 방식
@@ -249,7 +251,6 @@ class Thread5 extends Thread {                           // 1) Thread클래스�
         }
     }
 }
-
 public class EX13_Thread {
     static long startTime = 0;
 
