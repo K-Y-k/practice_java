@@ -162,6 +162,94 @@ import java.util.stream.Stream;
  *
  */
 
+
+/**
+ * 최종 연산
+ *
+ *          최종 연산                                                     설명
+ * void forEach(Consumer<\? super T> action)                     각 요소에 지정된 작업 수행
+ * void forEachOrdered(Consumer<\? super T> action)              forEachOrdered은 순서를 유지하므로 병렬 스트림으로 처리해야할 때 이를 사용 때
+ *
+ * long count()                                                  스트림의 요소의 개수 반환
+ *
+ * Optional<T> max(Comparator<\? super T> comparator)            스트림의 최대값
+ * Optional<T> min(Comparator<\? super T> comparator)            최소값을 반환, Comparator로 최대/최소 조건을 지정해야함
+ *
+ * Optional<T> findAny()       // 아무거나 하나(병렬 스트림 처리)     스트림의 요소 하나를 반환
+ * Optional<T> findFirst()     // 첫 번째 요소(직렬 스트림 처리)      filter()랑 같이 쓰임
+ *
+ * boolean allMatch(Predicate<T> p)  // 모두 만족하는지             주어진 조건을 요소가 (모두/하나라도)만족시키는지
+ * boolean anyMatch(Predicate<T> p)  // 하나라도 만족하는지          또는 모두 만족시키지 않는지 확인
+ * boolean noneMatch(Predicate<T> p) // 모두 만족하지 않는지
+ *
+ * Object[] toArray()                                             스트림의 모든 요소를 배열로 담아서 반환
+ * A[]      toArray(IntFunction<A[]> generator)
+ *
+ * (최종 연산의 핵심)
+ * Optional<T> reduce(BinaryOperator<T> accumulator)              스트림의 요소를 하나씩 꺼내어 줄여가면서 계산한다.
+ * T reduce(T identity, BinaryOperator<T> accumulator)
+ * U reduce(U identity, BiFunction<U,T,U> accumulator,
+ *                          BinaryOperator<U> combiner)
+ *
+ * (최종 연산의 핵심)
+ * R collect(Collector<T,A,R> collector)                          스트림의 요소를 수집한다.
+ * R collect(Supplier<R> supplier, BiConsumer<R,T> accumulator,   주로 요소를 그훕화하거나 분할한 결과를 컬렉션에 담아 반환하는데 사용된다.
+ *                                    BiConsumer<R,R> combiner)   reduce()를 이용해서 그룹작업할 때 사용
+ */
+
+/**
+ * 스트림의 최종연산
+ * - 작업 수행 : forEach(), forEachOrdered()
+ * 스트림의 모든 요소에 지정된 작업을 수행
+ * void forEach(Consumer<\? super T> action)                            // 병렬스트림인 경우 순서가 보장되지 않음
+ * void forEachOrdered(Consumer<\? super T> action)                     // 병렬스트림인 경우에도 순서가 보장됨
+ *
+ * ex)
+ *                       sequential(): 직렬 스트림(스트림 작업을 직렬로 처리)
+ * IntStream.range(1, 10).sequential().forEach(System.out::print);      // 123456789
+ * IntStream.range(1, 10).sequential().forEach(System.out::print);      // 123456789
+ *
+ *                       parallel(): 병렬 스트림(여러 쓰레드가 나눠서 작업)
+ * IntStream.range(1, 10).parallel().forEach(System.out::print);        // 683295714, 여러 쓰레드가 나눠 처리했기에 순서보장이 안됨
+ * IntStream.range(1, 10).parallel().forEachOrdered(System.out::print); // 123456789, 순서보장이 됨
+ *
+ *
+ * - 조건 검사 : allMatch(), anyMatch(), noneMatch()
+ * boolean allMatch(Predicate<\? super T> predicate)  // 모든 요소가 조건을 만족시키려면 true
+ * boolean anyMatch(Predicate<\? super T> predicate)  // 한 요소라도 조건을 만족시키려면 true
+ * boolean noneMatch(Predicate<\? super T> predicate) // 모든 요소가 조건을 만족시키지 않으면 true
+ *
+ * ex)
+ * boolean hasFailedStu = stuStream.anyMatch(s->s.getTotalScore() <= 100); // 100점 이하가 한명이라도 있는지?
+ *
+ * - 조건에 일치하는 요소 찾기 : findFirst(), findAny()
+ * 결과가 null일 수 있어서 Optional<T>로 반환하는 것이다.
+ * Optional<T> findFirst()  // 첫 번째 요소를 반환,  순차 스트림에 사용
+ * Optional<T> findAny()    // 아무거나 하나를 반환, 병렬 스트림에 사용
+ *
+ *                                    filter랑 같이 쓴다.
+ * Optional<Student> result = stuStream.filter(s->s.getTotalScore() <= 100).findFirst();
+ * Optional<Student> result = parallelStream.filter(s->s.getTotalScore() <= 100).findAny();
+ *
+ *
+ * - reduce()
+ * 스트림의 요소를 하나씩 줄여가며 누적연산(accumulator) 수행
+ * Optional<T> reduce(BinaryOperator<T> accumulator)
+ * T reduce(T identity, BinaryOperator<T> accumulator)
+ * U reduce(U identity, BinaryOperator<U,T,U> accumulator, BinaryOperator<U> combiner)
+ *
+ * - identity   (핵심) : 초기값
+ * - accumulator(핵심) : 이전 연산결과와 스트림의 요소에 수행할 연산
+ * - combiner         : 병렬처리된 결과를 합치는데 사용할 연산(병렬 스트림)
+ *
+ * // int reduce(int identity, InBinaryOperator op)
+ *                            초기값     작업
+ * int count = intStream.reduce(0, (a,b) -> a + 1);                        // count(): 요소 개수
+ * int sum = intStream.reduce(0, (a,b) -> a + b);                          // sum()  : 합
+ * int max = intStream.reduce(Integer.MIN_VALUE, (a,b) -> a > b ? a : b);  // max()  : 최대값
+ * int min = intStream.reduce(Integer.MAX_VALUE, (a,b) -> a < b ? a : b);  // min()  : 최소값
+ */
+
 public class EX14_Stream_Operation {
     public static void main(String[] args) {
         // 예제 1) 중간 연산 : 정렬 Comparator 활용
@@ -238,6 +326,50 @@ public class EX14_Stream_Operation {
                 .distinct()
                 .sorted()
                 .forEach(System.out::println);
+
+        System.out.println();
+
+
+        // 예제 4) 최종연산
+        String[] strArr = {
+                "Inheritance", "Java", "Lambda", "stream",
+                "OptionalDouble", "IntStream", "count", "sum"
+        };
+
+//        Stream.of(strArr).forEach(System.out::println);
+        Stream.of(strArr)
+                .parallel() // 병렬 스트림으로 처리
+                .forEachOrdered(System.out::println); // 병렬 처리할 때 요소 순서를 유지하고 싶을 때 forEachOrdered사용
+
+        boolean noEmptyStr = Stream.of(strArr).noneMatch(s -> s.length() == 0); // 문자열 길이가 0인 것이 하나도 없는지(noneMatch) 확인
+        Optional<String> sWord = Stream.of(strArr)
+                .filter(s -> s.charAt(0) == 's').findFirst(); // s로 시작하는 문자들 중 첫번째 요소를 가져옴
+
+        System.out.println("noEmptyStr = " + noEmptyStr);
+        System.out.println("sWord = " + sWord.get());
+
+        // Stream<String>을 Stream<Integer>로 변환           (s) -> s.length()
+//        Stream<Integer> intStream = Stream.of(strArr).map(String::length)
+
+        // Stream<String>을 IntStream으로 변환 (성능 향상)
+        IntStream intStream1 = Stream.of(strArr).mapToInt(String::length);
+        IntStream intStream2 = Stream.of(strArr).mapToInt(String::length);
+        IntStream intStream3 = Stream.of(strArr).mapToInt(String::length);
+        IntStream intStream4 = Stream.of(strArr).mapToInt(String::length);
+
+        int count = intStream1.reduce(0, (a, b) -> a + 1);
+        int sum = intStream2.reduce(0, (a, b) -> a + b);
+
+//        OptionalInt max = IntStream.empty().reduce(Integer::max);
+        OptionalInt max = intStream3.reduce(Integer::max);
+        OptionalInt min = intStream4.reduce(Integer::min);
+
+        System.out.println("count = " + count);
+        System.out.println("sum = " + sum);
+        System.out.println("max = " + max.getAsInt());
+//        System.out.println("max = " + max.orElse(0));
+//        System.out.println("max = " + max.orElseGet(()->0));
+        System.out.println("min = " + min.getAsInt());
     }
 }
 
